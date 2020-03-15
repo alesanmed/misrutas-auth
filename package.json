@@ -1,9 +1,11 @@
 {
   "name": "ms-auth",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "license": "MIT",
+  "description": "Auth microservice for MisRutas project",
+  "author": "Ale Sanchez <alesanchezmedina@gmail.com>",
+  "repository": {
+    "url": "https://github.com/alesanmed/misrutas-auth.git"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
