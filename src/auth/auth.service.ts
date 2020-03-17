@@ -13,6 +13,8 @@ export class AuthService {
     try {
       const user = await this.client.send({ role: 'user', cmd: 'get' }, { username }).toPromise();
 
+      Logger.log(`User retrieved: ${JSON.stringify(user)}`);
+
       if(compareSync(password, user?.password)) {
         delete user.password;
 

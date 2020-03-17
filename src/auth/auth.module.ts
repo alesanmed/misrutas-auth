@@ -6,7 +6,7 @@ import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import { CONFIG } from 'src/config/transport';
+import NatsConfig from '../config/nats';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { CONFIG } from 'src/config/transport';
       name: 'AUTH_SERVICE',
       transport: Transport.NATS,
       options: {
-        ...CONFIG.NATS
+        ...NatsConfig
       }
     }])
   ],
