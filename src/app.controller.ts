@@ -9,7 +9,7 @@ export class AppController {
     private readonly authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('auth')
   async login(@Request() req) {
     return this.authService.login(req.user);
   }

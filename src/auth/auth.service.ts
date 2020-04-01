@@ -1,7 +1,9 @@
-import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Injectable, Inject, Logger, RequestTimeoutException } from '@nestjs/common';
 import { compareSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
+import { timeout, catchError } from 'rxjs/operators';
+import { TimeoutError, throwError } from 'rxjs';
 @Injectable()
 export class AuthService {
   constructor(
@@ -11,9 +13,18 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     try {
-      const user = await this.client.send({ role: 'user', cmd: 'get' }, { username }).toPromise();
+      const user = await this.client.send({ role: 'user', cmd: 'get' }, { username })
+      .pipe(
+        timeout(5000), 
+        catchError(err => {
+        if (err instanceof TimeoutError) {
+          return throwError(new RequestTimeoutException());
+        }
+        return throwError(err);
+      }),)
+      .toPromise();
 
-      Logger.log(`User retrieved: ${JSON.stringify(user)}`);
+      Logger.log(`User retrieved: ${JSON.stringify({ id: user.id, username: user.username })}`);
 
       if(compareSync(password, user?.password)) {
         delete user.password;
@@ -23,7 +34,7 @@ export class AuthService {
       return null;
     } catch(e) {
       Logger.log(e);
-      return null;
+      throw e;
     }
   }
 

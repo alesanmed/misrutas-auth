@@ -13,7 +13,7 @@ import NatsConfig from '../config/nats';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' }
+      signOptions: { expiresIn: '60m' }
     }),
     ClientsModule.register([{
       name: 'AUTH_SERVICE',
