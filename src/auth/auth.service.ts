@@ -7,7 +7,7 @@ import { TimeoutError, throwError } from 'rxjs';
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('AUTH_SERVICE')
+    @Inject('AUTH_CLIENT')
     private readonly client: ClientProxy,
     private readonly jwtService: JwtService) {}
 
