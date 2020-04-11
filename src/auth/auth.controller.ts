@@ -1,10 +1,10 @@
 import { Controller, Post, UseGuards, Request, Logger } from '@nestjs/common';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { AuthService } from './auth/auth.service';
+import { LocalAuthGuard } from './local-auth.guard';
+import { AuthService } from './auth.service';
 import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
-export class AppController {
+export class AuthController {
   constructor(
     private readonly authService: AuthService) {}
 
