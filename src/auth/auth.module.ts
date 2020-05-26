@@ -7,6 +7,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { NATSConfigService } from '../config/NATSConfigService';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
+import { ClientProxyFactory } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { AuthController } from './auth.controller';
     JwtStrategy, NATSConfigService,
   {
     provide: 'AUTH_CLIENT',
-    useFactory: (natsConfigService: NATSConfigService) => ({
+    useFactory: (natsConfigService: NATSConfigService) => ClientProxyFactory.create({
       ...natsConfigService.getNATSConfig
     }),
     inject: [NATSConfigService]
